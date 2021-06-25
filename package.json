@@ -1,11 +1,13 @@
 {
-  "name": "intro-to-serverless",
+  "name": "serverless-livestream-1",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "@azure/functions": "^1.2.3"
+  },
   "devDependencies": {}
 }
