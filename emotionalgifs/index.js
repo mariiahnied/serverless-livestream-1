@@ -34,12 +34,12 @@ module.exports = async function (context, req) {
 async function analyzeImage(img){
     
     //change values while testing...
-    //const subscriptionKey = process.env.FACEAPI_KEY1; 
-    //const uriBase = process.env.FACEAPI_ENDPOINT + '/face/v1.0/detect';
+    const subscriptionKey = process.env.FACEAPI_KEY1; 
+    const uriBase = process.env.FACEAPI_ENDPOINT + '/face/v1.0/detect';
     
     //...to this
-    const subscriptionKey = "cd78cabb10ff4efdb04cc2da471d6444";
-    const uriBase = "https://gettingemotional2.cognitiveservices.azure.com/face/v1.0/detect";
+    //const subscriptionKey = "cd78cabb10ff4efdb04cc2da471d6444";
+    //const uriBase = "https://gettingemotional2.cognitiveservices.azure.com/face/v1.0/detect";
 
 
     let params = new URLSearchParams({
