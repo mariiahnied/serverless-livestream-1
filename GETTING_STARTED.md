@@ -31,6 +31,7 @@
 6. Enable Azure Account and Azure Functions extensions in VS Code. See below: 
 
 ![Azure](https://user-images.githubusercontent.com/57218090/124665871-dff5d480-de72-11eb-86f0-35c3acf07db4.PNG)
+<br>
 7. Install homebrew if you're on Mac. You can find the instructions [here](https://brew.sh/)
 
 Finally, you are ready for the setup script. Follow the steps listed below:
@@ -76,6 +77,22 @@ sudo chown -R yourusername /usr/local/share/zsh
 compaudit
 ```
 
+</details>
+<hr>
+
+### ⚙️ Installing VScode Extensions
+
+<details>
+<summary>Step by step instructions to install the Vscode extensions ▶️ </summary>
+The features that Visual Studio Code includes out-of-the-box are just the start. VS Code extensions let you add languages, debuggers, and tools to your installation to support your development workflow. 
+ 
+Take a look at these [instructions](https://code.visualstudio.com/docs/editor/extension-marketplace) on how to install Vscode extensions. The extensions we will need are:
+ 
+- [Azure Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-node-azure-pack)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint). 
+- [Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer)
+ 
+ > Watch this [video](https://www.youtube.com/watch?v=5IGVeq2DdsA) on how to use ESLint with Vscode.
 </details>
 <hr>
 
@@ -172,6 +189,33 @@ In this case, the student should probably take another look at the capitalizatio
 </details>
 
 > :bulb: Using this feedback, fix your code. Every time you commit, the action will run again to check your code!
+<hr>
+
+### 🤔 General Debugging Guide
+
+<details>
+<summary>Helpful tips in fixing errors ▶️ </summary>
+ 
+Configuration Tips
+ 
+- [ ] Check to make sure that your Azure account (and any resources) was set up properly
+- [ ] Make sure that your VS Code is linked to the right Azure account locally
+- [ ] When in doubt (or when you make any settings changes on VS Code) close the app and open it again
+- [ ] If any action on VS Code is taking longer than it should then close vscode/azure portal and reopen it before trying again
+- [ ] If you're Azure account isn't working get a new one WITH the verification code assigned to you (xxxx-xxxx-xxxx-xxxx...)
+
+General Tips
+ 
+- [ ] Adding extra console.log, console.error etc lines to the code
+- [ ] How to add a [breakpoint](https://code.visualstudio.com/docs/editor/debugging) and step through code in VS code
+- [ ] How and When to add a [log point](https://www.youtube.com/watch?v=g44TZ9ckWQk) and step through code in VS code 
+- [ ] Find the debug log inside the azure portal a deployed function
+- [ ] Make sure to save/autosave your code
+ 
+ [Microsoft's Debugging Guide](https://docs.microsoft.com/en-us/visualstudio/debugger/debugging-absolute-beginners?view=vs-2019&tabs=csharp)
+ 
+<br>
+</details>
 <hr>
 
 ### :question: Do I have to push a commit to run a check?
