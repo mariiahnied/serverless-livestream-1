@@ -10,7 +10,8 @@
     "@azure/storage-blob": "^12.2.1",
     "morse-code-converter": "^1.0.2",
     "node-fetch": "^2.6.1",
-    "parse-multipart": "^1.0.4"
+    "parse-multipart": "^1.0.4",
+    "querystring": "^0.2.1"
   },
   "devDependencies": {},
   "main": "index.js",

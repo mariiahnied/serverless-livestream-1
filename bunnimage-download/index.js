@@ -5,7 +5,8 @@ module.exports = async function (context, req) {
     let blobStorage = "mh1"
     var download = ""
     var downloadpng = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".png";
-    var downloadjpg = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".jpeg";
+    var downloadjpg = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".jpg";
+    var downloadjpeg = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".jpeg";
 
     let pngresp = await fetch(downloadpng, {
         method: 'GET',
@@ -13,16 +14,22 @@ module.exports = async function (context, req) {
     let pngdata = await pngresp;
     
     let jpgresp = await fetch(downloadjpg, {
-    method: 'GET',
+        method: 'GET',
     })
     let jpgdata = await jpgresp;
 
+    let jpegresp = await fetch(downloadjpeg, {
+        method: 'GET',
+        })
+    let jpegdata = await jpegresp;
 
-    if (pngdata.statusText == "The specified blob does not exist." && jpgdata.statusText == "The specified blob does not exist." ) 
+
+    if (pngdata.statusText == "The specified blob does not exist." && jpgdata.statusText == "The specified blob does not exist." && jpegdata.statusText == "The specified blob does not exist." ) 
     {
         success = false; 
         context.log("Does not exist: " + pngdata)
         context.log("Does not exist: " + jpgdata)
+        context.log("Does not exist: " + jpegdata)
     } 
     else if (pngdata.statusText != "The specified blob does not exist.") 
     {
@@ -30,11 +37,17 @@ module.exports = async function (context, req) {
         download = downloadpng
         context.log("Does exist: " + pngdata)
     } 
-    else if (jpgdata.statusText != "The specified blob does not exist." || jpegdata.statusText != "The specified blob does not exist.") 
+    else if (jpgdata.statusText != "The specified blob does not exist.") 
     {
         success = true;
         download = downloadjpg
         context.log("Does exist: " + jpgdata)
+    }
+    else if (jpegdata.statusText != "The specified blob does not exist.") 
+    {
+        success = true;
+        download = downloadjpeg
+        context.log("Does exist: " + jpegdata)
     }
 
     context.res = {
