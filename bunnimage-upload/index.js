@@ -4,18 +4,18 @@ const { BlobServiceClient } = require("@azure/storage-blob");
 
 
 module.exports = async function (context, req) {
-    var responseMessage = ""
+    let responseMessage = ""
     try{
         // get the header called "codename" which is how you want to name the file
         var password = req.headers['codename']; 
 
         // use parse-multipart to parse the body
-        var body = req.body;
-        var boundary = multipart.getBoundary(req.headers['content-type']);
-        var parsedBody = multipart.Parse(body, boundary);
+        let body = req.body;
+        let boundary = multipart.getBoundary(req.headers['content-type']);
+        let parsedBody = multipart.Parse(body, boundary);
         
         // determine the file-type here!
-        var filetype = parsedBody[0].type;
+        let filetype = parsedBody[0].type;
         
         if (filetype == "image/png") {
             ext = "png";
