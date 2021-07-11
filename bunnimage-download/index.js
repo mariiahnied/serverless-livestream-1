@@ -5,7 +5,7 @@ module.exports = async function (context, req) {
     let blobStorage = "mh1"
     var download = ""
     var downloadpng = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".png";
-    var downloadjpg = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".jpg";
+    var downloadjpg = "https://" + blobStorage + ".blob.core.windows.net/images/" + username + ".jpeg";
 
     let pngresp = await fetch(downloadpng, {
         method: 'GET',
