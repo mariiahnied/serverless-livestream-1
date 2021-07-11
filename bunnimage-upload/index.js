@@ -6,7 +6,7 @@ const { BlobServiceClient } = require("@azure/storage-blob");
 module.exports = async function (context, req) {
     var responseMessage = ""
     try{
-        var password = req.headers['codename']; // get the header called "codename"
+        var password = req.headers['codename']; // get the header called "codename" which is how you want to name the file
         //var the_header_value = req.headers['insert_header_name'];
         // use parse-multipart to parse the body
         var body = req.body;
