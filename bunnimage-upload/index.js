@@ -24,18 +24,20 @@ async function uploadFile(parsedBody, ext, password) {
 };
 
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
 
     let responseMessage = ""
+    try{
+        // get the header called "codename" which is how you want to name the file
+        var password = req.headers['codename']; 
 
-    try {
-        var password = req.headers['codename'];
-
+        // use parse-multipart to parse the body
+        let body = req.body;
         let boundary = multipart.getBoundary(req.headers['content-type']);
-
-        let parsedBody = multipart.Parse(req.body, boundary);
-
+        let parsedBody = multipart.Parse(body, boundary);
+        
+        // determine the file-type here!
         let filetype = parsedBody[0].type;
+        
 
         if (filetype == "image/png") {
             ext = "png";
