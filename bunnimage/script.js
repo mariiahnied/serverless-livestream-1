@@ -1,4 +1,4 @@
-function getImage(event){
+async function getImage(event){
     event.preventDefault()
     var myform = document.getElementById("myform");
     let nameInput = document.getElementById("username");
@@ -15,10 +15,10 @@ function getImage(event){
     if(document.getElementById("username").value != ''){
 
         try{
-            let url = "https://bunni1.azurewebsites.net/api/bunnimage-upload"
+            let url = "https://bunni1.azurewebsites.net/api/bunnimage-upload?code=key1"
             console.log("Image was uploaded, making POST request to Azure function")
             //create request to Azure function
-            const resp = await fetch(url,{
+            const resp = fetch(url,{
                 method:'POST',
                 headers:{
                     'codename': nameInput.value
