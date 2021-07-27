@@ -3,6 +3,13 @@ const fetch = require('node-fetch')
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
+    // function generate_name() {
+    //     var names = ["Shreya", "Emily", "Fifi", "Beau", "Evelyn", "Julia", "Daniel", "Fardeen"];
+    //     var random_value = Math.floor(names.length * Math.random());
+    //     var random_name = names[random_value];
+    //     return random_name
+    // }
+
     let name1 = req.query.name1;
     let name2 = req.query.name2;
     let name3 = req.query.name3;
@@ -17,7 +24,7 @@ module.exports = async function (context, req) {
         let data = await resp.arrayBuffer()
         let base64data = Buffer.from(data).toString('base64')
         return base64data
-    }
+    };
 
     let cat1 = await getCat(name1)
     let cat2 = await getCat(name2)
@@ -32,4 +39,4 @@ module.exports = async function (context, req) {
             cat4: cat4,
         }
     };
-}
+};
