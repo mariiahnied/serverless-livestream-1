@@ -91,7 +91,6 @@ async function downloadImage(){
             
             let data = await resp.json() //in order to use infromation in resp, we need to make a JS object from a JSON by calling this
             let imageUrl = data.downloadUri
-            //const myObj = JSON.parse(resp);
             //console.log("data")
             //console.log(data)
             //console.log("imageUrl")
