@@ -23,7 +23,7 @@ module.exports = async function (context, req) {
         });
         let data = await resp.arrayBuffer()
         let base64data = Buffer.from(data).toString('base64')
-        return base64data
+        return  base64data
     };
 
     let cat1 = await getCat(name1)
