@@ -1,0 +1,176 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+<video width="400" controls>
+  <source src="./finalCut.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+<p>These are the frames' images generated. </p>
+<ol id="olFrames"></ol>
+
+
+<script type="text/JavaScript">
+//**************************************************************** 
+
+var framesArray = [];
+var isDanger = false;
+
+//***********************
+//generating frames
+function getVideoImage(path, secs, callback) {
+  var me = this, video = document.createElement('video');
+  video.onloadedmetadata = function() {
+    if ('function' === typeof secs) {
+      secs = secs(this.duration);
+    }
+    this.currentTime = Math.min(Math.max(0, (secs < 0 ? this.duration : 0) + secs), this.duration);
+  };
+  video.onseeked = function(e) {
+    var canvas = document.createElement('canvas');
+    canvas.height = video.videoHeight;
+    canvas.width = video.videoWidth;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var img = new Image();
+    img.src = canvas.toDataURL();
+    //populating framesArray with generated frames
+    framesArray.push(img);
+    callback.call(me, img, this.currentTime, e);
+  };
+  video.onerror = function(e) {
+    callback.call(me, undefined, undefined, e);
+  };
+  video.src = path;
+}
+
+function showImageAt(secs) {
+  var duration;
+  getVideoImage(
+    './finalCut.mp4',
+    function(totalTime) {
+      duration = totalTime;
+      return secs;
+    },
+    function(img, secs, event) {
+      if (event.type == 'seeked') {
+        var li = document.createElement('li');
+        li.innerHTML += '<b>Frame at second ' + secs + ':</b><br />';
+        li.appendChild(img);
+        document.getElementById('olFrames').appendChild(li);
+        if (duration >= ++secs) {
+          showImageAt(secs);
+        };
+      }
+    }
+  );
+}
+//***********************
+
+//***********************
+//this creates a blob from a given base64 image
+function dataURItoBlob(dataURI) { 
+    console.log("Begin to execute dataURItoBlob()")
+    
+    //The atob function will decode a Base64-encoded string into a new string with a character for each byte of the binary data.
+    let byteString = atob(dataURI.split(',')[1]); //a very long string
+    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0] //image.png
+    let arrayBuffer = new ArrayBuffer(byteString.length); 
+    let iarray = new Uint8Array(arrayBuffer); 
+    for (let i = 0; i < byteString.length; i++) { 
+        iarray[i] = byteString.charCodeAt(i); 
+    } 
+    const blob = new Blob([arrayBuffer], {type: mimeString}); 
+    console.log("This is my blob :))))")
+    consnole.log(blob)
+    console.log("This is my blob to URL :))))")
+    consnole.log(blob.toDataURL())
+    return blob;
+}
+
+//using Computer vision to determine tags of the frame, 
+//and then check if any tag is inside dangerous flagTags
+//if so -> break the loop, and send the warning message
+//otherwise -> continue looping, when done send a positive message
+async function analyzeIfDanger(frame){
+    console.log("Begin to execute analyzeIfDanger()")
+
+    let flagTags = ["weapon", "firearm", "rifle", "ranged weapon", "gun", 
+    "shooting", "assault rifle", "gun barrel", "machine gun", "trigger", 
+    "explosive weapon", "air gun", "sniper rifle", "handgun", "gun",
+    "pistol", "revolver", "military"];
+  
+    //credentials for Azure ComputerVision API
+    const key = 'd0fe24bef18346caaa9e38d77bde5dd0';
+    const endpointTags = 'https://compvisionvideo.cognitiveservices.azure.com/vision/v3.2/analyze?visualFeatures=Tags';
+
+    // console.log("This is frame")
+    // console.log(frame)
+    // console.log("This is blob");
+    // console.log(dataURItoBlob(frame));
+
+    //making a POST request to Azure ComputerVision API to get tags for the image
+
+
+    //making a POST request to Azure ComputerVision API to get tags for the image
+    
+    let resp = await fetch(endpointTags,{
+    
+    method:'POST',
+    body: JSON.stringify({
+        "data": dataURItoBlob(frame)
+    }),
+    headers:{
+        "Content-Type": 'application/json',
+        "Ocp-Apim-Subscription-Key": key
+    }
+    });
+    
+    let tagsResponse = await resp.json();
+    //check if there is any match between the image tags and dangerous flagTags
+    for (let i = 0; i < tagsResponse.tags.length; i++) {
+        for (let j = 0; j < flagTags.length; j++){
+            if (tagsResponse.tags[i].name === flagTags[j]){
+                console.log("Your tag " + tagsResponse.tags[i].name + "is Dangerous.");
+                console.log("It matches flagTag " + flagTags[j] + ".")
+                document.getElementById("demo").innerHTML = "Result: Your video has weapons detected";
+                isDanger = true;
+                return; 
+            }
+        }    
+        console.log("Your tag " + tagsResponse.tags[i].name + "is NOT Dangerous.");       
+    }    
+    document.getElementById("demo").innerHTML = "Result: Your video has no weapons detected";
+    return; 
+}
+//***********************
+
+//***********************
+//main function called from the website
+function dangerDetection(){
+    console.log("Begin to execute dangerDetection()")
+    
+    //analyze each given frame
+    for (let f = 0; f < framesArray.length; f++) {
+        analyzeIfDanger(framesArray[f])
+        if (isDanger == true)
+            break;
+    }
+}  
+//**************************************************************** 
+    
+</script>
+
+<br></br>
+<input id="button" type="button" onclick="showImageAt(0)" value="Show frames">
+<input id="button2" type="button" onclick="dangerDetection()" value="Start detection">
+
+<p id="demo"></p>
+
+<p>
+Video courtesy of 
+<a href="https://www.pexels.com/videos/" target="_blank">Pexel Videos</a>.
+</p>
+</body> 
+</html>
