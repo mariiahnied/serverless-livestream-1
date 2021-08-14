@@ -16,8 +16,10 @@
 var framesArray = [];
 var isDanger = false;
 var message = "Result: Your video has no weapons detected";
+
 function getVideoImage(path, secs, callback) {
-  var me = this, video = document.createElement('video');
+  let me = this;
+  let video = document.createElement('video');
   video.onloadedmetadata = function() {
     if ('function' === typeof secs) {
       secs = secs(this.duration);
@@ -62,7 +64,7 @@ function showImageAt(secs) {
     }
   );
 }
-//showImageAt(0);
+showImageAt(0);
 
 function dangerDetection(){
     console.log("Begin to execute dangerDetection()")
@@ -147,7 +149,7 @@ function dangerDetection(){
       });
       let tagsResponse = await resp.json();
 
-      console.log("POST REQUEST IS SUCESSFULL");
+      console.log("POST REQUEST IS SUCESSFULL", tagsResponse);
       //console.log("tagsResponse ");
       //console.log(tagsResponse);
 
